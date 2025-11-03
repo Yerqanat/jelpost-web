@@ -4,6 +4,13 @@
     "track-code": "Track code",
     "tariffs": "Tariffs",
     "partners": "Partners",
-    "search-code": "Search tracking code"
+    "search-code": "Search tracking code",
+    "sign-in": "Sign in",
+    "theme": "Theme"
+  },
+  "home": {
+    "title": "Use Tezpost to get your delivery fast",
+    "content": "Tezpost helps you track, manage, and receive parcels faster — with full transparency and local support.",
+    "CTA": "Download free APP"
   }
 }

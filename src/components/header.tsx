@@ -1,7 +1,7 @@
 "use client";
 
 import { Toggle } from "./ui/toggle";
-import { MoonIcon, Search, SunIcon } from "lucide-react";
+import { Menu, MoonIcon, Search, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -20,6 +20,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -59,8 +70,8 @@ export default function Header() {
         isScrollingDown && "shadow-[0_2px_10px_-2px_rgba(0,0,0,0.1)]"
       )}
     >
-      <div className="max-w-5xl min-w-3xl h-16 mx-auto flex items-center gap-8">
-        <Link href="/">
+      <div className="px-2 md:px-0 max-w-5xl h-16 mx-auto flex items-center gap-2 md:gap-8">
+        <Link className="mr-auto md:mr-0" href="/">
           <Image
             src="/tezpost-logo.svg"
             alt="Tezpost logo"
@@ -70,8 +81,8 @@ export default function Header() {
             preload={false}
           />
         </Link>
-        <nav className="flex justify-between items-center mr-auto">
-          <ul className="flex gap-6 font-lato font-medium">
+        <nav className="md:flex justify-between items-center mr-auto hidden">
+          <ul className="flex gap-6 font-lato font-semibold">
             <li>
               <Link
                 href="/"
@@ -114,19 +125,23 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-        <Dialog>
-          <DialogTrigger className="bg-primary p-2 rounded-full cursor-pointer">
-            <Search size={16} color="white" />
-          </DialogTrigger>
-          <DialogContent showCloseButton={false}>
-            <DialogHeader>
-              <DialogTitle>{t("search-code")}</DialogTitle>
-              <SearchShipment />
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
 
-        <div className="flex gap-4 py-4 h-full items-center">
+        {/* Search bar */}
+        <div>
+          <Dialog>
+            <DialogTrigger className="bg-primary p-2 rounded-full cursor-pointer">
+              <Search size={16} color="white" />
+            </DialogTrigger>
+            <DialogContent showCloseButton={false}>
+              <DialogHeader>
+                <DialogTitle>{t("search-code")}</DialogTitle>
+                <SearchShipment />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <div className="hidden md:flex gap-4 py-4 h-full items-center">
           <Avatar className="cursor-pointer" onClick={() => {}}>
             <AvatarImage src="/avatar.png" alt="Rabbit avatar" />
             <AvatarFallback>YY</AvatarFallback>
@@ -146,6 +161,87 @@ export default function Header() {
             )}
           </Toggle>
           <Language />
+        </div>
+        {/* Mobile menu button  */}
+        <div className="md:hidden">
+          <Drawer>
+            <DrawerTrigger className="border p-1 rounded-md cursor-pointer">
+              <Menu />
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader className="flex flex-col gap-4">
+                <DrawerTitle></DrawerTitle>
+
+                <ul className="flex flex-col gap-2 font-lato font-semibold">
+                  <li>
+                    <Link
+                      href="/"
+                      className={
+                        isActive("/") ? "border-b-2 border-primary pb-1" : ""
+                      }
+                    >
+                      {t("home")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/tracking"
+                      className={
+                        isActive("/tracking")
+                          ? "border-b-2 border-primary pb-1"
+                          : ""
+                      }
+                    >
+                      {t("track-code")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/tariffs"
+                      className={
+                        isActive("/tariffs")
+                          ? "border-b-2 border-primary pb-1"
+                          : ""
+                      }
+                    >
+                      {t("tariffs")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/partner"
+                      className={
+                        isActive("/partner")
+                          ? "border-b-2 border-primary pb-1"
+                          : ""
+                      }
+                    >
+                      {t("partners")}
+                    </Link>
+                  </li>
+                </ul>
+                <Separator />
+                <div className="flex items-center justify-center space-x-2">
+                  <Label htmlFor="theme-mode">{t("theme")}</Label>
+                  <Switch
+                    id="theme-mode"
+                    checked={isDark}
+                    onCheckedChange={(checked) =>
+                      setTheme(checked ? "dark" : "light")
+                    }
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <Language />
+                </div>
+              </DrawerHeader>
+              <DrawerFooter>
+                <Button variant="outline" className="cursor-pointer">
+                  {t("sign-in")}
+                </Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
     </header>
