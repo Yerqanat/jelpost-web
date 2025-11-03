@@ -1,3 +1,5 @@
+"use client";
+
 import { usePathname, useRouter } from "../i18n/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import Image from "next/image";
@@ -12,8 +14,8 @@ export default function Language() {
   const selectedLang =
     languages.find((l) => l.code === currentLocale) || languages[0];
 
-  const handleLocaleChange = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+  const handleLocaleChange = (locale: string) => {
+    router.replace(pathname as string, { locale });
   };
 
   return (

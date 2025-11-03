@@ -1,21 +1,21 @@
 export const languages = [
   {
-    code: "Kz",
+    code: "kk",
     label: "Қазақша",
     flag: "/flags/kazakhstan.png",
   },
   {
-    code: "Ru",
+    code: "ru",
     label: "Русский",
     flag: "/flags/russia.png",
   },
   {
-    code: "En",
+    code: "en",
     label: "English",
     flag: "/flags/united-states.png",
   },
   {
-    code: "Zh",
+    code: "zh",
     label: "中文",
     flag: "/flags/china.png",
   },

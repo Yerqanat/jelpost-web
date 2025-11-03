@@ -1,5 +1,9 @@
 {
   "header": {
-    "track-code": "Трек код"
+    "home": "Басты бет",
+    "track-code": "Трек код",
+    "tariffs": "Тарифтер",
+    "partners": "Серіктестері",
+    "search-code": "Трек-кодбен іздеу"
   }
 }

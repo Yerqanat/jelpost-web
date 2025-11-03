@@ -1,5 +1,9 @@
 {
   "header": {
-    "track-code": "Track code"
+    "home": "Home",
+    "track-code": "Track code",
+    "tariffs": "Tariffs",
+    "partners": "Partners",
+    "search-code": "Search tracking code"
   }
 }

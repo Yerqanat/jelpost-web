@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Montserrat, Lato, Lobster } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import Header from "@/src/components/header";
+
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import Header from "@/src/components/header";
 
 const lobster = Lobster({
   variable: "--font-lobster",
@@ -36,7 +37,7 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function LocaleLayout({ children, params }: Props) {
+export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();

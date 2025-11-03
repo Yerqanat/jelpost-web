@@ -1,5 +1,9 @@
 {
   "header": {
-    "track-code": "Трек код"
+    "home": "Главная",
+    "track-code": "Трек код",
+    "tariffs": "Тарифы",
+    "partners": "Партнёры",
+    "search-code": "Поиск по трек-коду"
   }
 }

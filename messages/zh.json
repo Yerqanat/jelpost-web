@@ -1,5 +1,9 @@
 {
   "header": {
-    "track-code": "物流号"
+    "home": "首页",
+    "track-code": "物流号",
+    "tariffs": "价格",
+    "partners": "合伙人",
+    "search-code": "搜索物流号"
   }
 }
