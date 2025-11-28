@@ -150,5 +150,19 @@
     "rights": "© {year} Jelpost. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "auth": {
+    "sign_in": "Sign In",
+    "phone_label": "Phone Number",
+    "otp_label": "Verification Code",
+    "send_otp": "Send Code",
+    "verify_otp": "Verify",
+    "phone_placeholder": "Enter phone number",
+    "otp_placeholder": "Enter 6-digit code",
+    "resend_otp": "Resend Code",
+    "success": "Successfully signed in!",
+    "error": "Error signing in. Please try again.",
+    "enter_phone_desc": "Enter your phone number to receive a verification code.",
+    "enter_otp_desc": "Enter the 6-digit code sent to your phone."
   }
 }

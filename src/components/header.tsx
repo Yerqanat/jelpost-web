@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "../i18n/navigation";
+import { Link, usePathname, useRouter } from "../i18n/navigation";
 
 import Language from "../components/language";
 import SearchShipment from "../components/Search";
@@ -31,11 +31,14 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Switch } from "@/src/components/ui/switch";
 import { Label } from "@/src/components/ui/label";
+import { supabase } from "@/src/lib/supabaseClient";
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null); // Using any for simplicity, or import User type
+  const router = useRouter(); // Initialized useRouter
 
   const isDark = theme === "dark";
   const t = useTranslations("header");
@@ -62,6 +65,41 @@ export default function Header() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleAvatarClick = () => {
+    if (user) {
+      // TODO: Navigate to profile or show logout menu
+      // For now, just log out for demonstration if requested, or do nothing
+      // The user request specifically asked for "sign in page" on click.
+      // If logged in, maybe we shouldn't open sign in.
+      // Let's just open sign in if NOT logged in.
+      // If logged in, maybe show a toast or something?
+      // For now, I'll assume the user wants to test sign in, so I'll only open if !user.
+      // But if I want to be helpful, I can add a logout option.
+      const confirmLogout = window.confirm("Do you want to sign out?");
+      if (confirmLogout) {
+        supabase.auth.signOut();
+      }
+    } else {
+      router.push("/sign-in"); // Changed to navigate to sign-in page
+    }
+  };
 
   return (
     <header
@@ -142,9 +180,14 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex gap-4 py-4 h-full items-center">
-          <Avatar className="cursor-pointer" onClick={() => {}}>
-            <AvatarImage src="/avatar.png" alt="Rabbit avatar" />
-            <AvatarFallback>YY</AvatarFallback>
+          <Avatar className="cursor-pointer" onClick={handleAvatarClick}>
+            <AvatarImage
+              src={user ? "/avatar-logged-in.png" : "/avatar.png"}
+              alt="Avatar"
+            />
+            <AvatarFallback>
+              {user ? user.phone?.slice(-2) : "YY"}
+            </AvatarFallback>
           </Avatar>
           <Separator orientation="vertical" />
           <Toggle
@@ -236,9 +279,21 @@ export default function Header() {
                 </div>
               </DrawerHeader>
               <DrawerFooter>
-                <Button variant="outline" className="cursor-pointer">
-                  {t("sign-in")}
-                </Button>
+                {user ? (
+                  <Button
+                    variant="outline"
+                    className="cursor-pointer"
+                    onClick={() => supabase.auth.signOut()}
+                  >
+                    Sign Out
+                  </Button>
+                ) : (
+                  <Link href="/sign-in" className="w-full">
+                    <Button variant="outline" className="cursor-pointer w-full">
+                      {t("sign-in")}
+                    </Button>
+                  </Link>
+                )}
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
