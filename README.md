@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JelPost
 
-## Getting Started
+**Қытайдан Қазақстанға жылдам жеткізу / Быстрая доставка из Китая в Казахстан**
 
-First, run the development server:
+JelPost — логистика мен сәлемдемелерді қадағалауды жеңілдетуге арналған заманауи веб-қосымша. Біз нақты уақыттағы бақылауды, көптілді қолдауды және клиенттер мен серіктестер үшін ыңғайлы интерфейсті ұсынамыз.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+JelPost — это современное веб-приложение, разработанное для упрощения логистики и отслеживания посылок. Мы предлагаем отслеживание в реальном времени, многоязычную поддержку и удобный интерфейс для клиентов и партнеров.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Негізгі мүмкіндіктер / Ключевые особенности
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Нақты уақыттағы бақылау / Отслеживание в реальном времени**: Трек-код арқылы сәлемдемелерді лезде табыңыз. Толық тарих пен ағымдағы күйді көріңіз.
+- **Көптілділік / Многоязычность**: 4 тілде толық қолдау:
+  - 🇰🇿 Қазақша (`kk`)
+  - 🇷🇺 Русский (`ru`)
+  - 🇬🇧 English (`en`)
+  - 🇨🇳 Chinese (`zh`)
+- **Серіктестерге арналған / Для партнеров**: Логистиканы басқаруға арналған арнайы бөлімдер.
+- **Заманауи дизайн / Современный дизайн**: Radix UI және Tailwind CSS арқылы жасалған ыңғайлы интерфейс.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Технологиялар / Технологии
 
-## Learn More
+- **Framework**: [Next.js 16](https://nextjs.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Database**: [Supabase](https://supabase.com/)
+- **Internationalization**: [next-intl](https://next-intl-docs.vercel.app/)
+- **UI Components**: [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Орнату / Установка
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Жобаны жергілікті компьютерде іске қосу үшін келесі қадамдарды орындаңыз.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Талаптар / Требования
 
-## Deploy on Vercel
+- Node.js 18+
+- npm, yarn, pnpm, немесе bun
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Іске қосу / Запуск
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Репозиторийді клондау / Клонирование репозитория:**
+
+   ```bash
+   git clone <repository-url>
+   cd tezpost-web
+   ```
+
+2. **Тәуелділіктерді орнату / Установка зависимостей:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Орта айнымалыларын орнату / Настройка переменных окружения:**
+   `.env.local` файлын құрып, Supabase деректерін енгізіңіз:
+
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Серверді іске қосу / Запуск сервера:**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Қосымшаны ашу / Открытие приложения:**
+   Браузерде [http://localhost:3000](http://localhost:3000) мекенжайын ашыңыз.
+
+## 📄 Лицензия
+
+Бұл жоба жеке меншік болып табылады. / Этот проект является частной собственностью.

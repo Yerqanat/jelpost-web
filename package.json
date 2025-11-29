@@ -1,6 +1,21 @@
 {
-  "name": "jelpost-web",
+  "name": "jelpost",
   "version": "0.1.0",
+  "description": "JelPost - Қытайдан Қазақстанға жылдам жеткізу / Быстрая доставка из Китая в Казахстан",
+  "keywords": [
+    "jelpost",
+    "logistics",
+    "tracking",
+    "delivery",
+    "china",
+    "kazakhstan",
+    "жеткізу",
+    "қадағалау",
+    "доставка",
+    "отслеживание",
+    "логистика"
+  ],
+  "author": "Yerqanat",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -150,5 +150,21 @@
     "rights": "© {year} Jelpost. 保留所有权利。",
     "privacy": "隐私政策",
     "terms": "服务条款"
+  },
+  "auth": {
+    "sign_in": "登录",
+    "phone_label": "电话号码",
+    "otp_label": "验证码",
+    "send_otp": "发送验证码",
+    "verify_otp": "验证",
+    "phone_placeholder": "输入电话号码",
+    "otp_placeholder": "输入6位验证码",
+    "resend_otp": "重新发送验证码",
+    "success": "登录成功!",
+    "error": "登录失败. 请重试.",
+    "enter_phone_desc": "输入电话号码以接收验证码.",
+    "enter_otp_desc": "输入发送到电话的6位验证码.",
+    "account": "账号",
+    "logout": "退出"
   }
 }
