@@ -33,15 +33,27 @@ import { Switch } from "@/src/components/ui/switch";
 import { Label } from "@/src/components/ui/label";
 import { supabase } from "@/src/lib/supabaseClient";
 
+import { User } from "@supabase/supabase-js";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function Header() {
   const { theme, setTheme } = useTheme();
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const pathname = usePathname();
-  const [user, setUser] = useState<any>(null); // Using any for simplicity, or import User type
-  const router = useRouter(); // Initialized useRouter
+  const [user, setUser] = useState<User | null>(null);
+  const [profilePic, setProfilePic] = useState<string | null>(null);
+  const router = useRouter();
 
   const isDark = theme === "dark";
   const t = useTranslations("header");
+  const tAuth = useTranslations("auth");
 
   const isActive = (href: string) => pathname.endsWith(href);
 
@@ -67,38 +79,44 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    const fetchProfile = async (userId: string) => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("profile_picture")
+        .eq("id", userId)
+        .single();
+
+      if (data && data.profile_picture) {
+        setProfilePic(data.profile_picture);
+      }
+    };
+
     // Check active session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      }
     });
 
     // Listen for changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else {
+        setProfilePic(null);
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  const handleAvatarClick = () => {
-    if (user) {
-      // TODO: Navigate to profile or show logout menu
-      // For now, just log out for demonstration if requested, or do nothing
-      // The user request specifically asked for "sign in page" on click.
-      // If logged in, maybe we shouldn't open sign in.
-      // Let's just open sign in if NOT logged in.
-      // If logged in, maybe show a toast or something?
-      // For now, I'll assume the user wants to test sign in, so I'll only open if !user.
-      // But if I want to be helpful, I can add a logout option.
-      const confirmLogout = window.confirm("Do you want to sign out?");
-      if (confirmLogout) {
-        supabase.auth.signOut();
-      }
-    } else {
-      router.push("/sign-in"); // Changed to navigate to sign-in page
-    }
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
   };
 
   return (
@@ -180,15 +198,37 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex gap-4 py-4 h-full items-center">
-          <Avatar className="cursor-pointer" onClick={handleAvatarClick}>
-            <AvatarImage
-              src={user ? "/avatar-logged-in.png" : "/avatar.png"}
-              alt="Avatar"
-            />
-            <AvatarFallback>
-              {user ? user.phone?.slice(-2) : "YY"}
-            </AvatarFallback>
-          </Avatar>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src={profilePic || "/avatar.png"}
+                    alt="User Avatar"
+                  />
+                  <AvatarFallback>
+                    {user.phone?.slice(-2) || "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{tAuth("account")}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>
+                  {tAuth("logout")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Avatar
+              className="cursor-pointer"
+              onClick={() => router.push("/sign-in")}
+            >
+              <AvatarImage src="/avatar-anonymous.png" alt="Anonymous Avatar" />
+              {/* Assuming avatar-anonymous.png exists or using default fallback */}
+              <AvatarFallback>?</AvatarFallback>
+            </Avatar>
+          )}
           <Separator orientation="vertical" />
           <Toggle
             aria-label="Toggle theme"
@@ -283,9 +323,9 @@ export default function Header() {
                   <Button
                     variant="outline"
                     className="cursor-pointer"
-                    onClick={() => supabase.auth.signOut()}
+                    onClick={handleSignOut}
                   >
-                    Sign Out
+                    {tAuth("logout")}
                   </Button>
                 ) : (
                   <Link href="/sign-in" className="w-full">

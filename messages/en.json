@@ -163,6 +163,8 @@
     "success": "Successfully signed in!",
     "error": "Error signing in. Please try again.",
     "enter_phone_desc": "Enter your phone number to receive a verification code.",
-    "enter_otp_desc": "Enter the 6-digit code sent to your phone."
+    "enter_otp_desc": "Enter the 6-digit code sent to your phone.",
+    "account": "Account",
+    "logout": "Log out"
   }
 }
